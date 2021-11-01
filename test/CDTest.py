@@ -18,9 +18,11 @@ class Shop:
             return credit_card.payment_accepted
         return False
 
+
 class CreditCardProvider:
     def __init__(self, payment_accepted):
         self.payment_accepted = payment_accepted
+
 
 class CDTest(unittest.TestCase):
 
@@ -30,12 +32,31 @@ class CDTest(unittest.TestCase):
         credit_card = CreditCardProvider(True)
         self.assertEqual(True, shop.buy_cd("artist_c", "title_d", credit_card))
 
+    def test_buy_cd_when_payment_not_accepted_and_in_stock(self):
+        warehouse = Warehouse([("artist_c", "title_d")])
+        shop = Shop(warehouse)
+        credit_card = CreditCardProvider(False)
+        self.assertEqual(False, shop.buy_cd("artist_c", "title_d", credit_card))
 
-    #def test_get_cd_from_artist_and_title_when_not_exist(self):
+    def test_buy_cd_when_not_in_stock_payment_accepted(self):
+        warehouse = Warehouse([])
+        shop = Shop(warehouse)
+        credit_card = CreditCardProvider(True)
+        self.assertEqual(False, shop.buy_cd("artist_c", "title_d", credit_card))
+
+    def test_buy_one_cd_remove_one_cd_from_warehouse(self):
+        warehouse = Warehouse([("artist_c", "title_d")])
+        shop = Shop(warehouse)
+        credit_card = CreditCardProvider(True)
+        self.assertEqual(True, shop.buy_cd("artist_c", "title_d", credit_card))
+        #We buy a cd, then the stock is reduced by one
+        #We want to check
+
+    # def test_get_cd_from_artist_and_title_when_not_exist(self):
     #    warehouse = Warehouse()
     #    self.assertEqual(False, warehouse.findCD("artist_a", "title_b"))
 
-    #def test_get_cd_when_exist(self):
+    # def test_get_cd_when_exist(self):
     #    warehouse = Warehouse()
     #    self.assertEqual(True, warehouse.findCD("artist_c", "title_d"))
 
