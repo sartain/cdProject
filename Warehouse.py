@@ -1,6 +1,6 @@
 class Warehouse:
     def __init__(self):
-        pass
+        self.cd_list = [("c", "d")]
 
     def findCD(self, artist, title):
-        return False
+        return self.cd_list.__contains__((artist, title))
