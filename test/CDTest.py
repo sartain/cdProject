@@ -54,6 +54,14 @@ class CDTest(unittest.TestCase):
         #We buy a cd, then the stock is reduced by one
         #We want to check
 
+    def test_buy_two_cd_in_a_row_in_stock_payment_accepted(self):
+        warehouse = Warehouse([["artist_c", "title_d", 2]])
+        shop = Shop(warehouse)
+        credit_card = CreditCardProvider(True)
+        shop.buy_cd("artist_c", "title_d", credit_card)
+        self.assertEqual(True, shop.buy_cd("artist_c", "title_d", credit_card))
+
+
     # def test_get_cd_from_artist_and_title_when_not_exist(self):
     #    warehouse = Warehouse()
     #    self.assertEqual(False, warehouse.findCD("artist_a", "title_b"))
