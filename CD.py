@@ -5,8 +5,9 @@ class CD:
         self.stock = stock
         self.price = price
 
-    def buy_cd(self, credit_card, quantity, charts):
+    def buy_cd(self, credit_card, quantity, charts, competitorPrice):
         chart_position = charts.current_chart_position(self.artist, self.title)
+        competitor_price = competitorPrice.get_price()
         if credit_card.payment_accepted:
             if self.stock - quantity >= 0:
                 self.stock -= quantity
