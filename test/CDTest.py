@@ -27,35 +27,49 @@ class CreditCardProvider:
 class CDTest(unittest.TestCase):
 
     def test_buy_cd_when_payment_accepted_and_in_stock(self):
-        warehouse = Warehouse([["artist_c", "title_d", 1]])
+        warehouse = Warehouse([{
+            "artist": "artist_c",
+            "title": "title_d",
+            "stock": 1},
+        ])
         shop = Shop(warehouse)
         credit_card = CreditCardProvider(True)
         self.assertEqual(True, shop.buy_cd("artist_c", "title_d", credit_card))
 
     def test_buy_cd_when_payment_not_accepted_and_in_stock(self):
-        warehouse = Warehouse([["artist_c", "title_d", 1]])
+        warehouse = Warehouse([{
+            "artist": "artist_c",
+            "title": "title_d",
+            "stock": 1},
+        ])
         shop = Shop(warehouse)
         credit_card = CreditCardProvider(False)
         self.assertEqual(False, shop.buy_cd("artist_c", "title_d", credit_card))
 
     def test_buy_cd_when_not_in_stock_payment_accepted(self):
-        warehouse = Warehouse([])
+        warehouse = Warehouse({})
         shop = Shop(warehouse)
         credit_card = CreditCardProvider(True)
         self.assertEqual(False, shop.buy_cd("artist_c", "title_d", credit_card))
 
     def test_buy_one_cd_remove_one_cd_stock_from_warehouse_out_of_stock(self):
-        warehouse = Warehouse([["artist_c", "title_d", 1]])
+        warehouse = Warehouse([{
+            "artist": "artist_c",
+            "title": "title_d",
+            "stock": 1},
+        ])
         shop = Shop(warehouse)
         credit_card = CreditCardProvider(True)
         shop.buy_cd("artist_c", "title_d", credit_card) #Buy cd to reduce stock level
         #cd out of stock cannot buy again
         self.assertEqual(False, shop.buy_cd("artist_c", "title_d", credit_card))
-        #We buy a cd, then the stock is reduced by one
-        #We want to check
 
     def test_buy_two_cd_in_a_row_in_stock_payment_accepted(self):
-        warehouse = Warehouse([["artist_c", "title_d", 2]])
+        warehouse = Warehouse([{
+            "artist": "artist_c",
+            "title": "title_d",
+            "stock": 2},
+        ])
         shop = Shop(warehouse)
         credit_card = CreditCardProvider(True)
         shop.buy_cd("artist_c", "title_d", credit_card)
