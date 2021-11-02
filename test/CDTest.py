@@ -27,13 +27,13 @@ class CreditCardProvider:
 class CDTest(unittest.TestCase):
 
     def test_buy_cd_when_payment_accepted_and_in_stock(self):
-        warehouse = Warehouse([("artist_c", "title_d")])
+        warehouse = Warehouse([["artist_c", "title_d", 1]])
         shop = Shop(warehouse)
         credit_card = CreditCardProvider(True)
         self.assertEqual(True, shop.buy_cd("artist_c", "title_d", credit_card))
 
     def test_buy_cd_when_payment_not_accepted_and_in_stock(self):
-        warehouse = Warehouse([("artist_c", "title_d")])
+        warehouse = Warehouse([["artist_c", "title_d", 1]])
         shop = Shop(warehouse)
         credit_card = CreditCardProvider(False)
         self.assertEqual(False, shop.buy_cd("artist_c", "title_d", credit_card))
@@ -44,11 +44,13 @@ class CDTest(unittest.TestCase):
         credit_card = CreditCardProvider(True)
         self.assertEqual(False, shop.buy_cd("artist_c", "title_d", credit_card))
 
-    def test_buy_one_cd_remove_one_cd_from_warehouse(self):
-        warehouse = Warehouse([("artist_c", "title_d")])
+    def test_buy_one_cd_remove_one_cd_stock_from_warehouse_out_of_stock(self):
+        warehouse = Warehouse([["artist_c", "title_d", 1]])
         shop = Shop(warehouse)
         credit_card = CreditCardProvider(True)
-        self.assertEqual(True, shop.buy_cd("artist_c", "title_d", credit_card))
+        shop.buy_cd("artist_c", "title_d", credit_card) #Buy cd to reduce stock level
+        #cd out of stock cannot buy again
+        self.assertEqual(False, shop.buy_cd("artist_c", "title_d", credit_card))
         #We buy a cd, then the stock is reduced by one
         #We want to check
 
