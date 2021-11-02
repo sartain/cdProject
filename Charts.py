@@ -8,3 +8,6 @@ class Charts:
 
     def current_chart_position(self, artist, title):
         return self.chart_position
+
+    def in_top_100(self):
+        return self.chart_position <= 100

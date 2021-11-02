@@ -66,5 +66,23 @@ class CDTest(unittest.TestCase):
         cd.buy_cd(CreditCardProvider(True), 3, charts, competitor_price)
         competitor_price.get_price.assert_called_once()
 
+    def test_when_buying_cd_out_of_top_100_price_passed_to_card_provider(self):
+        charts = Charts(10000)
+        competitor_price = Competitor(8.99)
+        credit_card_provider = CreditCardProvider(True)
+        credit_card_provider.can_afford = MagicMock()
+        cd = CD("artist_a", "title_b", 5, 9.99)
+        cd.buy_cd(credit_card_provider, 3, charts, competitor_price)
+        credit_card_provider.can_afford.assert_called_with(9.99)
+
+    def test_when_buying_cd_in_top_100_reduce_price_by_one_pound(self):
+        charts = Charts(10)
+        competitor_price = Competitor(8.99)
+        credit_card_provider = CreditCardProvider(True)
+        credit_card_provider.can_afford = MagicMock()
+        cd = CD("artist_a", "title_b", 5, 9.99)
+        cd.buy_cd(credit_card_provider, 3, charts, competitor_price)
+        credit_card_provider.can_afford.assert_called_with(7.99)
+
 if __name__ == '__main__':
     unittest.main()
