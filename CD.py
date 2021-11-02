@@ -6,7 +6,6 @@ class CD:
         self.price = price
 
     def buy_cd(self, credit_card, quantity, charts, competitorPrice):
-        chart_position = charts.current_chart_position(self.artist, self.title)
         competitor_price = competitorPrice.get_price()
         price_to_pay = self.price
         if charts.in_top_100():

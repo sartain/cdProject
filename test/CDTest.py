@@ -52,11 +52,11 @@ class CDTest(unittest.TestCase):
 
     def test_cd_buy_function_receives_current_chart_position(self):
         charts = Charts(10)
-        charts.current_chart_position = MagicMock()
+        charts.in_top_100 = MagicMock()
         cd = CD("artist_a", "title_b", 5, 9.99)
         credit_card = CreditCardProvider(True)
         cd.buy_cd(credit_card, 3, charts, Competitor(8.99))
-        charts.current_chart_position.assert_called_once_with("artist_a", "title_b")
+        charts.in_top_100.assert_called_once
 
     def test_when_in_top100_cd_buy_gets_lowest_competitor_price_from_charts(self):
         charts = Charts(10)
