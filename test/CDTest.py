@@ -1,27 +1,8 @@
 import unittest
 
+from CreditCardProvider import CreditCardProvider
+from Shop import Shop
 from Warehouse import Warehouse
-
-
-class CD:
-    def __init__(self, artist, title):
-        self.artist = artist
-        self.title = title
-
-
-class Shop:
-    def __init__(self, warehouse):
-        self.warehouse = warehouse
-
-    def buy_cd(self, artist, title, credit_card):
-        if self.warehouse.findCD(artist, title):
-            return credit_card.payment_accepted
-        return False
-
-
-class CreditCardProvider:
-    def __init__(self, payment_accepted):
-        self.payment_accepted = payment_accepted
 
 
 class CDTest(unittest.TestCase):
